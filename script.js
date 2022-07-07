@@ -5,6 +5,11 @@ const startButton = document.querySelector("#start");
 const resetButton = document.querySelector("#reset");
 const currentScore = document.querySelector(".score__current");
 const highScore = document.querySelector(".score__high");
+const rightButton = document.querySelector("#right");
+const downButton = document.querySelector("#down");
+const leftButton = document.querySelector("#left");
+const upButton = document.querySelector("#up");
+const directionButtons = document.querySelectorAll(".movement-button");
 
 let xPos = "50px";
 let yPos = "100px";
@@ -21,7 +26,6 @@ Your current score is shown alongside the high score. Try your best to beat it!`
 }
 
 const makeInitialSnake = () => {
-    console.log(event);
     snake.innerHTML = `
     <div class="snake-div snake-div--head"></div>
     <div class="snake-div"></div>
@@ -46,18 +50,22 @@ const startGame = () => {
 }
 
 const getDirection = (event) => {
-    switch(event.key){
+    switch(event.key || event.target.value){
         case "ArrowRight":
             direction = 1;
+            console.log(direction);
             break;
         case "ArrowDown":
             direction = 2;
+            console.log(direction);
             break;
         case "ArrowLeft":
             direction = 3;
+            console.log(direction);
             break;
         case "ArrowUp":
             direction = 4;
+            console.log(direction);
             break;
         default:
             break;
@@ -74,5 +82,9 @@ const ensureInBox = (coord, min, max) => { //ensures randomly spawned food is is
 resetButton.addEventListener("click", resetGame);
 startButton.addEventListener("click", startGame);
 instructionsButton.addEventListener("click", showInstructions);
+
+directionButtons.forEach((button) => {
+    button.addEventListener("click", getDirection);
+})
 
 window.addEventListener("keydown", getDirection);
