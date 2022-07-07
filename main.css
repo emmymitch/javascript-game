@@ -15,7 +15,7 @@ header * {
 }
 header .button {
   height: 2rem;
-  width: 5rem;
+  width: 5.5rem;
   border: 0.125rem solid rgb(0, 0, 86);
   border-radius: 0.5rem;
   background-color: darkblue;
