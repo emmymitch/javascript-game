@@ -5,9 +5,11 @@
 }
 
 header {
-  height: 10vh;
+  height: 25vh;
   display: flex;
+  justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
   background-color: dodgerblue;
 }
 header * {
@@ -29,7 +31,58 @@ header .score {
   color: white;
   text-shadow: 0.05rem 0.05rem 0.05rem darkblue;
 }
+header .movement-buttons .movement-button {
+  width: 0;
+  height: 0;
+  margin-bottom: 0.5rem;
+  background-color: transparent;
+}
+header .movement-buttons #left {
+  border-top: 1rem solid transparent;
+  border-bottom: 1rem solid transparent;
+  border-left: 1rem solid transparent;
+  border-right: 1rem solid rgb(0, 0, 86);
+}
+header .movement-buttons #left:active {
+  border-right: 1rem solid darkblue;
+}
+header .movement-buttons #up {
+  border-left: 1rem solid transparent;
+  border-right: 1rem solid transparent;
+  border-top: 1rem solid transparent;
+  border-bottom: 1rem solid rgb(0, 0, 86);
+}
+header .movement-buttons #up:active {
+  border-bottom: 1rem solid darkblue;
+}
+header .movement-buttons #down {
+  border-left: 1rem solid transparent;
+  border-right: 1rem solid transparent;
+  border-bottom: 1rem solid transparent;
+  border-top: 1rem solid rgb(0, 0, 86);
+}
+header .movement-buttons #down:active {
+  border-top: 1rem solid darkblue;
+}
+header .movement-buttons #right {
+  border-top: 1rem solid transparent;
+  border-bottom: 1rem solid transparent;
+  border-right: 1rem solid transparent;
+  border-left: 1rem solid rgb(0, 0, 86);
+}
+header .movement-buttons #right:active {
+  border-left: 1rem solid darkblue;
+}
 
+@media screen and (min-width: 768px) {
+  header {
+    justify-content: flex-start;
+    height: 10vh;
+  }
+  header .movement-buttons {
+    display: none;
+  }
+}
 main {
   height: 90vh;
   background-color: cornsilk;
