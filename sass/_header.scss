@@ -1,0 +1,13 @@
+header{
+    height: 10%;
+    display: flex;
+    background-color: $colour-header;
+
+    .button{
+        height: 3rem;
+        width: 7rem;
+
+        background-color: $colour-button;
+        color: $colour-text;
+    }
+}
