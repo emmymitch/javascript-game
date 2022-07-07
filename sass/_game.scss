@@ -17,6 +17,16 @@ main{
             background-color: $colour-snake-border;
         }
     }
+
+    .food{
+        height: 1rem;
+        width: 1rem;
+
+        display: none;
+
+        background-color: $colour-food;
+        border-radius: 50%;
+    }
 }
 
 @media screen and (min-width: 768px){

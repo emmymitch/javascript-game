@@ -53,6 +53,13 @@ main .snake-div {
 main .snake-div--head {
   background-color: indigo;
 }
+main .food {
+  height: 1rem;
+  width: 1rem;
+  display: none;
+  background-color: darkred;
+  border-radius: 50%;
+}
 
 @media screen and (min-width: 768px) {
   main {

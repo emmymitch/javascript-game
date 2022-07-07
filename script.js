@@ -1,18 +1,19 @@
 // Defining inital constants
 const instructionsButton = document.querySelector("#instructions");
 const snake = document.querySelector(".snake");
+const food = document.querySelector(".food");
 const startButton = document.querySelector("#start");
 const resetButton = document.querySelector("#reset");
 const currentScore = document.querySelector(".score__current");
 const highScore = document.querySelector(".score__high");
-const rightButton = document.querySelector("#right");
-const downButton = document.querySelector("#down");
-const leftButton = document.querySelector("#left");
-const upButton = document.querySelector("#up");
+// const rightButton = document.querySelector("#right");
+// const downButton = document.querySelector("#down");
+// const leftButton = document.querySelector("#left");
+// const upButton = document.querySelector("#up");
 const directionButtons = document.querySelectorAll(".movement-button");
 
-let xPos = "50px";
-let yPos = "100px";
+let xPos = "3rem";
+let yPos = "6rem";
 
 // Functions
 const showInstructions = () => {
@@ -37,18 +38,6 @@ const makeInitialSnake = () => {
     snake.style.top = yPos;
 } 
 
-const resetGame = () => {
-    currentScore.innerText = "0";
-    highScore.innerText = "0";
-    makeInitialSnake();
-}
-
-const startGame = () => {
-    speed = 1;
-    direction = 1;
-    renderFood();
-}
-
 const getDirection = (event) => {
     switch(event.key || event.target.value){
         case "ArrowRight":
@@ -70,6 +59,28 @@ const getDirection = (event) => {
         default:
             break;
     }
+}
+
+const resetGame = () => {
+    currentScore.innerText = "0";
+    highScore.innerText = "0";
+    food.style.display = "none";
+    makeInitialSnake();
+}
+
+const startGame = () => {
+    makeInitialSnake();
+    speed = 1;
+    direction = 4;
+    renderFood();
+}
+
+const renderFood = () => {
+    food.style.display = "inline-block";
+}
+
+const eatFood = () => {
+    food.style.display = "none";
 }
 
 const ensureInBox = (coord, min, max) => { //ensures randomly spawned food is is game box
