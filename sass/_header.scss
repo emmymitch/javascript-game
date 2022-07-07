@@ -1,13 +1,32 @@
 header{
-    height: 10%;
+    height: 10vh;
     display: flex;
+    align-items: center;
+
     background-color: $colour-header;
 
+    *{
+        margin: 0 1rem;
+    }
+
     .button{
-        height: 3rem;
-        width: 7rem;
+        height: 2rem;
+        width: 5rem;
+
+        border: 0.125rem solid $colour-button-border;
+        border-radius: 0.5rem;
 
         background-color: $colour-button;
         color: $colour-text;
+
+        &:active{
+            background-color: $colour-button-border;
+        }
+    }
+
+    .score{
+        text-align: center;
+        color: $colour-text;
+        text-shadow: 0.05rem 0.05rem 0.05rem $colour-button;
     }
 }
