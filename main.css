@@ -1,0 +1,31 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header {
+  height: 10vh;
+  display: flex;
+  align-items: center;
+  background-color: dodgerblue;
+}
+header * {
+  margin: 0 1rem;
+}
+header .button {
+  height: 2rem;
+  width: 5rem;
+  border: 0.125rem solid rgb(0, 0, 86);
+  border-radius: 0.5rem;
+  background-color: darkblue;
+  color: white;
+}
+header .button:active {
+  background-color: rgb(0, 0, 86);
+}
+header .score {
+  text-align: center;
+  color: white;
+  text-shadow: 0.05rem 0.05rem 0.05rem darkblue;
+}
