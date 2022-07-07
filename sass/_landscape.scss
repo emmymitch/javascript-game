@@ -1,0 +1,22 @@
+@media screen and (max-width: 930px) and (max-height: 500px) and (orientation: landscape){
+    header{
+        height: 12.5vh;
+        width: 100vw;
+    }
+    
+    main{
+        height: 75vh;
+        width: 100vw;
+    }
+    
+    footer{
+        height: 12.5vh;
+        display: flex;
+        //padding: 1rem;
+        width: 100vw;
+
+        .movement-button{
+            margin: 0.05rem 0;
+        }
+    }
+}
