@@ -36,7 +36,9 @@ const makeInitialSnake = () => {
     `;
 
     const snakeBit = document.querySelector("._1");
-    snakeBit.style.gridArea = "12/12/13/13";
+    snakeGrid = "12/12/13/13";
+    snake.style.gridArea = snakeGrid;
+    return snakeGrid;
 } 
 
 const getDirection = (event) => {
@@ -80,8 +82,7 @@ const renderFood = () => {
     //console.log(gridSizeGetter.style.display);
     //////////////////////////////////////////////////////////////////WRITE CHECK TO SEE IF SNAKE ALREADY THERE
     randomiseFoodGrid();
-    while (food.style.gridArea == newFoodGrid){
-        //&& does not equal snake location
+    while ((food.style.gridArea == newFoodGrid) || snakeGrid == newFoodGrid){
         randomiseFoodGrid();
     }
 
@@ -89,8 +90,8 @@ const renderFood = () => {
 }
 
 const randomiseFoodGrid = () => {
-    foodRow = Math.round(Math.random()*25);
-    foodColumn = Math.round(Math.random()*25);
+    foodRow = Math.round(Math.random()*23);
+    foodColumn = Math.round(Math.random()*23);
     newFoodGrid = `${foodRow} / ${foodColumn} / ${foodRow + 1} / ${foodColumn + 1}`;
     return newFoodGrid;
 }
