@@ -49,11 +49,13 @@ main{
 
 @media screen and (min-width: 768px){
     main{
-        height: 90vh;
+        //height: 90vh;
 
         .game{
-            width: 50rem;
-            height: 50rem;
+            width: 40rem;
+            height: 40rem;
+            grid-template-columns: repeat(40, 1rem);
+            grid-template-rows: repeat(40, 1rem);
         }
     }
 }

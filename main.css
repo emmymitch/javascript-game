@@ -75,12 +75,11 @@ main .game .food {
 }
 
 @media screen and (min-width: 768px) {
-  main {
-    height: 90vh;
-  }
   main .game {
-    width: 50rem;
-    height: 50rem;
+    width: 40rem;
+    height: 40rem;
+    grid-template-columns: repeat(40, 1rem);
+    grid-template-rows: repeat(40, 1rem);
   }
 }
 footer {
