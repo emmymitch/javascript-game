@@ -1,36 +1,56 @@
 main{
-    height: 77.5vh;
-    background-color: $colour-game-background;
+    display: flex;
+    justify-content: center;
 
-    .snake-div{
-        margin: -0.07rem;
+    background-color: $colour-header;
 
-        height: 1rem;
-        width: 1rem;
+    .game{
+        width: 23rem;
+        height: 23rem;
 
-        display: inline-block;
+        display: grid;
+        grid-template-columns: repeat(25, 1rem);
+        grid-template-rows: repeat(25, 1rem);
+        gap: 0;
 
-        background-color: $colour-snake-inner;
-        border: 0.15rem solid $colour-snake-border;
+        background-color: $colour-game-background;
 
-        &--head{
-            background-color: $colour-snake-border;
+        .snake-div{
+            margin: -0.07rem;
+
+            height: 1rem;
+            width: 1rem;
+
+            display: inline-block;
+
+            background-color: $colour-snake-inner;
+            border: 0.15rem solid $colour-snake-border;
+
+            &--head{
+                background-color: $colour-snake-border;
+            }
         }
-    }
 
-    .food{
-        height: 1rem;
-        width: 1rem;
+        .food{
+            height: 1rem;
+            width: 1rem;
 
-        display: none;
+            display: none;
+            grid-area: 0/0/1/1;
 
-        background-color: $colour-food;
-        border-radius: 50%;
+            background-color: $colour-food;
+            border-radius: 50%;
+        }
     }
 }
 
 @media screen and (min-width: 768px){
     main{
         height: 90vh;
+
+        .game{
+            width: 50rem;
+            height: 50rem;
+        }
     }
 }
