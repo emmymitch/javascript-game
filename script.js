@@ -17,6 +17,9 @@ const directionButtons = document.querySelectorAll(".movement-button");
 let speed = 1;
 let currentScore = 0;
 let highScore = 0;
+let snakeRow = 1;
+let snakeCol = 1;
+let direction = "right";
 
 
 // Functions
@@ -32,11 +35,10 @@ Your current score is shown alongside the high score. Try your best to beat it!`
 
 const makeInitialSnake = () => {
     snake.innerHTML = `
-    <div class="snake-div snake-div--head _1"></div>
+    <div class="snake-div _1"></div>
     `;
 
-    const snakeBit = document.querySelector("._1");
-    snakeGrid = "12/12/13/13";
+    snakeGrid = `${snakeRow}/${snakeCol}/${snakeRow+1}/${snakeCol+1}`;
     snake.style.gridArea = snakeGrid;
     return snakeGrid;
 } 
@@ -58,22 +60,53 @@ const getDirection = (event) => {
         default:
             break;
     }
+    return direction;
+}
+
+const getSnakeGrid = () => {
+    if (direction == "right"){
+        snakeRow += 1;
+    } else if (direction == "down"){
+        snakeCol += 1;
+    } else if (direction == "left"){
+        snakeRow -= 1;
+    } else if (direction == "up"){
+        snakeCol -= 1;
+    }
+    snakeGrid = `${snakeRow}/${snakeCol}/${snakeRow+1}/${snakeCol+1}`;
+    snake.style.gridArea = snakeGrid;
+    return;
 }
 
 const moveSnake = () => {
+    while ((snakeCol < 25) || (snakeRow < 25) || (snakeCol >= 0) || (snakeRow >= 0)){
+        setInterval(getSnakeGrid, 1000);
 
+        if ((snakeCol == foodCol) && snakeRow == foodRow){
+            eatFood();
+        }
+    }
+    handleGameOver()
+}
+
+const handleGameOver = () => {
+    alert(`Game Over!
+
+You scored ${currentScore}`);
 }
 
 const resetGame = () => {
     currentScoreDisplay.innerText = "0";
     highScoreDisplay.innerText = "0";
     food.style.display = "none";
+    snake.style.gridArea = "1/1/2/2";
     makeInitialSnake();
 }
 
 const startGame = () => {
     makeInitialSnake();
     direction = "right";
+    //moveSnake();
     renderFood();
 }
 
@@ -91,8 +124,8 @@ const renderFood = () => {
 
 const randomiseFoodGrid = () => {
     foodRow = Math.round(Math.random()*23);
-    foodColumn = Math.round(Math.random()*23);
-    newFoodGrid = `${foodRow} / ${foodColumn} / ${foodRow + 1} / ${foodColumn + 1}`;
+    foodCol = Math.round(Math.random()*23);
+    newFoodGrid = `${foodRow} / ${foodCol} / ${foodRow + 1} / ${foodCol + 1}`;
     return newFoodGrid;
 }
 
@@ -115,6 +148,7 @@ const ensureInBox = (coord, min, max) => { //ensures randomly spawned food is is
     return Math.max(finalmax1, finalmax2);
 }
 
+
 // Event Listeners
 resetButton.addEventListener("click", resetGame);
 startButton.addEventListener("click", startGame);
@@ -125,3 +159,4 @@ directionButtons.forEach((button) => {
 })
 
 window.addEventListener("keydown", getDirection);
+window.addEventListener("keydown", moveSnake);
