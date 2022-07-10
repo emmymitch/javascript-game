@@ -93,46 +93,15 @@ footer {
   background-color: dodgerblue;
 }
 footer .movement-button {
-  width: 0;
-  height: 0;
+  width: 3rem;
+  height: auto;
   margin-bottom: 0.5rem;
+  border: none;
+  border-radius: 20%;
   background-color: transparent;
 }
-footer #left {
-  border-top: 1rem solid transparent;
-  border-bottom: 1rem solid transparent;
-  border-left: 1rem solid transparent;
-  border-right: 1rem solid rgb(0, 0, 86);
-}
-footer #left:active {
-  border-right: 1rem solid darkblue;
-}
-footer #up {
-  border-left: 1rem solid transparent;
-  border-right: 1rem solid transparent;
-  border-top: 1rem solid transparent;
-  border-bottom: 1rem solid rgb(0, 0, 86);
-}
-footer #up:active {
-  border-bottom: 1rem solid darkblue;
-}
-footer #down {
-  border-left: 1rem solid transparent;
-  border-right: 1rem solid transparent;
-  border-bottom: 1rem solid transparent;
-  border-top: 1rem solid rgb(0, 0, 86);
-}
-footer #down:active {
-  border-top: 1rem solid darkblue;
-}
-footer #right {
-  border-top: 1rem solid transparent;
-  border-bottom: 1rem solid transparent;
-  border-right: 1rem solid transparent;
-  border-left: 1rem solid rgb(0, 0, 86);
-}
-footer #right:active {
-  border-left: 1rem solid darkblue;
+footer .movement-button:active {
+  background-color: white;
 }
 
 @media screen and (min-width: 768px) {
