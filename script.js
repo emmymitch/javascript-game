@@ -4,16 +4,20 @@ const snake = document.querySelector(".snake");
 const food = document.querySelector(".food");
 const startButton = document.querySelector("#start");
 const resetButton = document.querySelector("#reset");
-const currentScore = document.querySelector(".score__current");
-const highScore = document.querySelector(".score__high");
+const currentScoreDisplay = document.querySelector(".score__current");
+const highScoreDisplay = document.querySelector(".score__high");
+const gridSizeGetter = document.querySelector("main");
+const gameGrid = document.querySelector(".game");
 // const rightButton = document.querySelector("#right");
 // const downButton = document.querySelector("#down");
 // const leftButton = document.querySelector("#left");
 // const upButton = document.querySelector("#up");
 const directionButtons = document.querySelectorAll(".movement-button");
 
-let xPos = "3rem";
-let yPos = "6rem";
+let speed = 1;
+let currentScore = 0;
+let highScore = 0;
+
 
 // Functions
 const showInstructions = () => {
@@ -28,59 +32,80 @@ Your current score is shown alongside the high score. Try your best to beat it!`
 
 const makeInitialSnake = () => {
     snake.innerHTML = `
-    <div class="snake-div snake-div--head"></div>
-    <div class="snake-div"></div>
-    <div class="snake-div"></div>
+    <div class="snake-div snake-div--head _1"></div>
     `;
 
-    snake.style.position = "absolute";
-    snake.style.right = xPos;
-    snake.style.top = yPos;
+    const snakeBit = document.querySelector("._1");
+    snakeBit.style.gridArea = "12/12/13/13";
 } 
 
 const getDirection = (event) => {
     switch(event.key || event.target.value){
         case "ArrowRight":
-            direction = 1;
-            console.log(direction);
+            direction = "right";
             break;
         case "ArrowDown":
-            direction = 2;
-            console.log(direction);
+            direction = "down";
             break;
         case "ArrowLeft":
-            direction = 3;
-            console.log(direction);
+            direction = "left";
             break;
         case "ArrowUp":
-            direction = 4;
-            console.log(direction);
+            direction = "up";
             break;
         default:
             break;
     }
 }
 
+const moveSnake = () => {
+
+}
+
 const resetGame = () => {
-    currentScore.innerText = "0";
-    highScore.innerText = "0";
+    currentScoreDisplay.innerText = "0";
+    highScoreDisplay.innerText = "0";
     food.style.display = "none";
     makeInitialSnake();
 }
 
 const startGame = () => {
     makeInitialSnake();
-    speed = 1;
-    direction = 4;
+    direction = "right";
     renderFood();
 }
 
 const renderFood = () => {
     food.style.display = "inline-block";
+    //console.log(gridSizeGetter.style.display);
+    //////////////////////////////////////////////////////////////////WRITE CHECK TO SEE IF SNAKE ALREADY THERE
+    randomiseFoodGrid();
+    while (food.style.gridArea == newFoodGrid){
+        //&& does not equal snake location
+        randomiseFoodGrid();
+    }
+
+    food.style.gridArea = newFoodGrid;
+}
+
+const randomiseFoodGrid = () => {
+    foodRow = Math.round(Math.random()*25);
+    foodColumn = Math.round(Math.random()*25);
+    newFoodGrid = `${foodRow} / ${foodColumn} / ${foodRow + 1} / ${foodColumn + 1}`;
+    return newFoodGrid;
 }
 
 const eatFood = () => {
     food.style.display = "none";
+    currentScore += 1;
+    currentScoreDisplay.innerText = currentScore;
+
+    if (currentScore > highScore){
+        highScore = currentScore;
+        highScoreDisplay.innerText = highScore;
+    }
+
+    renderFood();
 }
 
 const ensureInBox = (coord, min, max) => { //ensures randomly spawned food is is game box
