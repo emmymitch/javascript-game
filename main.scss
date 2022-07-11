@@ -1,5 +1,9 @@
 @use "./sass/variables" as *;
 
+body{
+    background-color: $colour-background;
+}
+
 @import "./sass/reset";
 @import "./sass/header";
 @import "./sass/game";

@@ -1,3 +1,7 @@
+body {
+  background-color: dodgerblue;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -10,7 +14,6 @@ header {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  background-color: dodgerblue;
 }
 header * {
   margin: 0 1rem;
@@ -40,7 +43,6 @@ header .score {
 main {
   display: flex;
   justify-content: center;
-  background-color: dodgerblue;
 }
 main .game {
   width: 23rem;
@@ -54,9 +56,8 @@ main .game {
   background-color: cornsilk;
 }
 main .game .snake-div {
-  padding: -0.07rem;
-  height: 0.9rem;
-  width: 0.9rem;
+  height: 1rem;
+  width: 1rem;
   display: inline-block;
   background-color: darkmagenta;
   border: 0.15rem solid indigo;
@@ -88,7 +89,6 @@ footer {
   justify-content: space-around;
   align-items: flex-start;
   flex-wrap: wrap;
-  background-color: dodgerblue;
 }
 footer .movement-button {
   width: 3rem;

@@ -2,8 +2,6 @@ main{
     display: flex;
     justify-content: center;
 
-    background-color: $colour-header;
-
     .game{
         width: 23rem;
         height: 23rem;
@@ -16,13 +14,13 @@ main{
         align-content: center;
         text-align: center;
 
-        background-color: $colour-game-background;
+        background-color: $colour-game;
 
         .snake-div{
-            padding: -0.07rem;
+            //padding: -0.07rem;
 
-            height: 0.9rem;
-            width: 0.9rem;
+            height: 1rem;
+            width: 1rem;
 
             display: inline-block;
 
