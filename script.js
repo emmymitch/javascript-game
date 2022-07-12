@@ -22,7 +22,7 @@ let foodRow = 20;
 let foodCol = 20;
 let snakeGrid = "";
 let snakeGridArray = [];
-const initialSnake = [1];
+const initialSnake = [1, 2];
 
 
 // Functions
@@ -47,12 +47,6 @@ const createGrid = () => {
     return width;
 }
 
-const removeGrid = () => {
-    while (gameGrid.hasChildNodes()){
-        gameGrid.removeChild(gameGrid.firstChild);
-    }
-}
-
 const showInstructions = () => {
     alert(`Direct your snake to eat as much fruit as it can without crashing into itself or the wall!
 
@@ -63,10 +57,10 @@ Click the start button to begin, or the reset button to reset the game.
 Your current score is shown alongside the high score. Try your best to beat it!`);
 }
 
-const makeInitialSnake = () => {
+const makeInitialSnake = (gridSquares) => {
     currentSnake = [...initialSnake];
-    currentSnake.forEach((snakebit, index) => {
-        gridSquares[index].classList.add("snake");
+    currentSnake.forEach((snakebit) => {
+        gridSquares[snakebit].classList.add("snake");
     })
 
     return  currentSnake;
@@ -105,7 +99,8 @@ const getDirection = () => {
 //     return snakeRow, snakeCol;
 // }
 
-const moveSnake = () => {
+const moveSnake = (gridSquares) => {
+    console.log(currentSnake)
     //Check not hitting wall
     //Bottom edge: snake head+width >= max grid div && going down
     if (((currentSnake[0] + width >= width**2) && (direction == width))
@@ -144,8 +139,8 @@ const moveSnake = () => {
     return;
 }
 
-const loopMoveSnake = () => {
-     looping =  setInterval(moveSnake, 50);
+const loopMoveSnake = (gridSquares) => {
+     looping =  setInterval(moveSnake(gridSquares), 50);
      return looping;
 }
 
@@ -159,46 +154,43 @@ You scored ${currentScore}. Well Done!`);
 const resetGame = () => {
     clearInterval(looping);
     currentScoreDisplay.innerText = "0";
-    food.style.display = "none";
     direction = "";
-    removeGrid();
-    makeInitialSnake();
+    gameGrid.innerHTML = "";
+    //makeInitialSnake();
 }
 
 const startGame = () => {
-    removeGrid();
+    gameGrid.innerHTML = "";
     currentScore = 0;
     currentScoreDisplay.innerText = "0";
 
     addListenersOnStart();
 
     createGrid();
-    let gridSquares = document.querySelectorAll(".gameDiv");
+    const gridSquares = document.querySelectorAll(".gameDiv");
 
-    renderFood();
+    renderFood(gridSquares);
 
-    makeInitialSnake();
+    makeInitialSnake(gridSquares);
     direction = 1;
-    loopMoveSnake()
+    loopMoveSnake(gridSquares)
     return;
 }
 
 const randomiseFood = () => {
-    foodRow = Math.round(Math.random()*gridSize);
-    foodCol = Math.round(Math.random()*gridSize);
-    foodGrid = `${foodRow} / ${foodCol} / ${foodRow + 1} / ${foodCol + 1}`;
-    return foodRow, foodCol, foodGrid;
+    foodPos = Math.round(Math.random()*gridSize);
+    return foodPos;
 }
 
-const renderFood = () => {
-    food.style.display = "inline-block";
-    //////////////////////////////////////////////////////////////////WRITE CHECK TO SEE IF SNAKE ALREADY THERE
+const renderFood = (gridSquares) => {
     randomiseFood();
-    while ((food.style.gridArea == foodGrid) || snakeGrid == foodGrid){
+
+    //Check if snake already there
+    while (gridSquares[foodPos].classList.contains("snake")){
         randomiseFood();
     }
 
-    food.style.gridArea = foodGrid;
+    gridSquares[foodPos].classList.add("food")
     return;
 }
 
