@@ -60,17 +60,29 @@ const makeInitialSnake = (gridSquares) => {
 const getDirection = () => {
     switch(event.key || event.target.parentElement.value){
         case "ArrowRight":
-            direction = 1; //next div
+            if (direction != 1){
+                direction = 1; //next div
+            }
             break;
+
         case "ArrowDown":
-            direction = width; //next line
+            if (direction != -width){
+                direction = width; //next line
+            }
             break;
+
         case "ArrowLeft":
-            direction = -1; //previous div
+            if (direction != 1){
+                direction = -1; //previous div
+            }
             break;
+
         case "ArrowUp":
-            direction = -width; //previous line
+            if (direction != 1){
+                direction = -width; //previous line
+            }
             break;
+
         default:
             break;
     }
