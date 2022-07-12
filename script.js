@@ -22,6 +22,7 @@ let foodRow = 20;
 let foodCol = 20;
 let snakeGrid = "";
 let snakeGridArray = [];
+const initialSnake = [1];
 
 
 // Functions
@@ -35,11 +36,20 @@ const detectScreenSize = () => {
 }
 
 const createGrid = () => {
-    for (let i=0; i<(mediaQuery.matches ? 225 : 100); i++){ //ternary operator checks what size of grid to make
-        let div = document.createElement("div");
+    for (let i=0; i<(mediaQuery.matches ? 625 : 400); i++){ //ternary operator checks what size of grid to make
+        let square = document.createElement("div");
+        square.classList.add("gameDiv");
 
-        //Make a big square of divs
-        gameGrid.appendChild(div);
+        //Make a big square of square divs
+        gameGrid.appendChild(square);
+    }
+    if (mediaQuery.matches ? width=25 : width=20);
+    return width;
+}
+
+const removeGrid = () => {
+    while (gameGrid.hasChildNodes()){
+        gameGrid.removeChild(gameGrid.firstChild);
     }
 }
 
@@ -54,33 +64,27 @@ Your current score is shown alongside the high score. Try your best to beat it!`
 }
 
 const makeInitialSnake = () => {
-    snake.innerHTML = `<div class="snake-div snake-bit _1"></div>`;
-    //snake = document.querySelector(".snake-div");
-    snakebit = document.querySelector(".snake-bit");
+    currentSnake = [...initialSnake];
+    currentSnake.forEach((snakebit, index) => {
+        gridSquares[index].classList.add("snake");
+    })
 
-    snakeRow = 2;
-    snakeCol = 2;
-    snakeGrid = `${snakeRow}/${snakeCol}/${snakeRow+1}/${snakeCol+1}`;
-    
-    snake.style.gridArea = snakeGrid;
-    snakeGridArray[0] = snakeGrid;
-
-    return  snakebit, snakeRow, snakeCol, snakeGrid;
+    return  currentSnake;
 } 
 
 const getDirection = () => {
     switch(event.key || event.target.parentElement.value){
         case "ArrowRight":
-            direction = "right";
+            direction = 1; //next div
             break;
         case "ArrowDown":
-            direction = "down";
+            direction = width; //next line
             break;
         case "ArrowLeft":
-            direction = "left";
+            direction = -1; //previous div
             break;
         case "ArrowUp":
-            direction = "up";
+            direction = -width; //previous line
             break;
         default:
             break;
@@ -88,35 +92,55 @@ const getDirection = () => {
     return direction;
 }
 
-const getSnakeGrid = () => {
-    if (direction == "right"){
-        snakeCol += 1;
-    } else if (direction == "down"){
-        snakeRow += 1;
-    } else if (direction == "left"){
-        snakeCol -= 1;
-    } else if (direction == "up"){
-        snakeRow -= 1;
-    }
-    return snakeRow, snakeCol;
-}
+// const getSnakeGrid = () => {
+//     if (direction == "right"){
+//         snakeCol += 1;
+//     } else if (direction == "down"){
+//         snakeRow += 1;
+//     } else if (direction == "left"){
+//         snakeCol -= 1;
+//     } else if (direction == "up"){
+//         snakeRow -= 1;
+//     }
+//     return snakeRow, snakeCol;
+// }
 
 const moveSnake = () => {
-    getSnakeGrid();
+    //Check not hitting wall
+    //Bottom edge: snake head+width >= max grid div && going down
+    if (((currentSnake[0] + width >= width**2) && (direction == width))
+        //Top edge: opposite to bottom edge
+        || ((currentSnake[0] - width <= 0) && (direction == -width))
+        //Right edge: snake head/width gives remainder width-1 (it's on the last
+        //square in a line) && going right
+        || ((currentSnake[0]%width == width-1) && (direction == 1))
+        //Left edge: opposite to right edge
+        || ((currentSnake[0]%width == 0) && (direction == -1))
+        ){
+            clearInterval(looping);
+            handleGameOver();
+            return;
 
-    if ((snakeCol+1 >= gridSize+2) || (snakeRow+1 >= gridSize+2) || (snakeCol < 0) || (snakeRow < 0)){
+    //Check not hitting self
+    } else if (gridSquares[currentSnake[0]+direction].classList.contains("snake")){
         clearInterval(looping);
         handleGameOver();
         return;
 
-    } else if ((snakeCol == foodCol) && snakeRow == foodRow){
+    //Check if eating food
+    } else if (gridSquares[currentSnake[0]+direction].classList.contains("food")){
         eatFood();
-    }
 
-    snakeGrid = `${snakeRow}/${snakeCol}/${snakeRow+1}/${snakeCol+1}`;
-    snakeGridArray.push(snakeGrid);
-    snake.style.gridArea = snakeGrid;
-    snakebit.style.gridArea = snakeGridArray[snakeGridArray.length - 1];
+    //Move if none of above are true
+    } else{
+        //Remove last snake bit
+        let tail = currentSnake.pop();
+        gridSquares[tail].classList.remove("snake");
+
+        //Add new head
+        currentSnake.unshift(currentSnake[0] + direction);
+        gridSquares[currentSnake[0]].classList.add("snake");
+    }
     return;
 }
 
@@ -137,24 +161,29 @@ const resetGame = () => {
     currentScoreDisplay.innerText = "0";
     food.style.display = "none";
     direction = "";
+    removeGrid();
     makeInitialSnake();
 }
 
 const startGame = () => {
-    clearInterval(moveSnake);
-    snakeGridArray = [];
-    addListenersOnStart();
+    removeGrid();
     currentScore = 0;
     currentScoreDisplay.innerText = "0";
+
+    addListenersOnStart();
+
     createGrid();
+    let gridSquares = document.querySelectorAll(".gameDiv");
+
     renderFood();
+
     makeInitialSnake();
-    direction = "right";
+    direction = 1;
     loopMoveSnake()
     return;
 }
 
-const randomiseFoodGrid = () => {
+const randomiseFood = () => {
     foodRow = Math.round(Math.random()*gridSize);
     foodCol = Math.round(Math.random()*gridSize);
     foodGrid = `${foodRow} / ${foodCol} / ${foodRow + 1} / ${foodCol + 1}`;
@@ -164,9 +193,9 @@ const randomiseFoodGrid = () => {
 const renderFood = () => {
     food.style.display = "inline-block";
     //////////////////////////////////////////////////////////////////WRITE CHECK TO SEE IF SNAKE ALREADY THERE
-    randomiseFoodGrid();
+    randomiseFood();
     while ((food.style.gridArea == foodGrid) || snakeGrid == foodGrid){
-        randomiseFoodGrid();
+        randomiseFood();
     }
 
     food.style.gridArea = foodGrid;
@@ -174,10 +203,6 @@ const renderFood = () => {
 }
 
 const eatFood = () => {
-    food.style.display = "none";
-    currentScore += 1;
-    currentScoreDisplay.innerText = currentScore;
-
     if (currentScore > highScore){
         highScore = currentScore;
         highScoreDisplay.innerText = highScore;
@@ -188,9 +213,9 @@ const eatFood = () => {
 }
 
 const expandSnake = () => {
-    snake.innerHTML += `<div class="snake-div snake-bit"></div>`;
-    snakebit.style.gridArea = snakeGridArray[snakeGridArray.length - 1];
-    return snakebit;
+    gridSquares[currentSnake[0]+direction].classList.remove("food");
+    gridSquares[tail].classList.add("snake");
+    currentSnake.push(tail);
 }
 
 
