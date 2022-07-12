@@ -6,13 +6,13 @@ const startButton = document.querySelector("#start");
 const resetButton = document.querySelector("#reset");
 const currentScoreDisplay = document.querySelector(".score__current");
 const highScoreDisplay = document.querySelector(".score__high");
-const gridSizeGetter = document.querySelector("main");
-const gameGrid = document.querySelector(".game");
+// const gameGrid = document.querySelector(".game");
 // const rightButton = document.querySelector("#right");
 // const downButton = document.querySelector("#down");
 // const leftButton = document.querySelector("#left");
 // const upButton = document.querySelector("#up");
 const directionButtons = document.querySelectorAll(".movement-button");
+const mediaQuery = window.matchMedia("(min-width: 768px)");
 
 let currentScore = 0;
 let highScore = 0;
@@ -24,6 +24,15 @@ let snakeGrid = "";
 
 
 // Functions
+const detectGridSize = () => {
+    if (mediaQuery.matches){
+        gridSize = 40;
+    } else{
+        gridSize = 24;
+    }
+    return gridSize;
+}
+
 const showInstructions = () => {
     alert(`Direct your snake to eat as much fruit as it can without crashing into itself or the wall!
 
@@ -47,13 +56,7 @@ const makeInitialSnake = () => {
 } 
 
 const getDirection = () => {
-    if (event.type == "click"){
-        directionInput = event.target.parentElement.value;
-    } else if (event.type == "keydown"){
-        directionInput = event.key;
-    }
-
-    switch(directionInput){
+    switch(event.key || event.target.parentElement.value){
         case "ArrowRight":
             direction = "right";
             break;
@@ -88,8 +91,8 @@ const getSnakeGrid = () => {
 const moveSnake = () => {
     getSnakeGrid();
 
-    if ((snakeCol + 1 >= 25) || (snakeRow + 1 >= 25) || (snakeCol < 0) || (snakeRow < 0)){
-        clearInterval(loopMoveSnake);
+    if ((snakeCol+1 >= gridSize+2) || (snakeRow+1 >= gridSize+2) || (snakeCol < 0) || (snakeRow < 0)){
+        clearInterval(looping);
         handleGameOver();
         return;
 
@@ -102,12 +105,13 @@ const moveSnake = () => {
     return;
 }
 
-// const loopMoveSnake = () => {
-//     setInterval(moveSnake, 50);
-// }
+const loopMoveSnake = () => {
+     looping =  setInterval(moveSnake, 50);
+     return looping;
+}
 
 const handleGameOver = () => {
-    clearInterval(loopMoveSnake);
+    //clearInterval(looping);
     direction = "";
     alert(`Game Over!
 
@@ -115,9 +119,8 @@ You scored ${currentScore}. Well Done!`);
 }
 
 const resetGame = () => {
-    clearInterval(loopMoveSnake);
+    clearInterval(looping);
     currentScoreDisplay.innerText = "0";
-    //highScoreDisplay.innerText = "0";
     food.style.display = "none";
     direction = "";
     makeInitialSnake();
@@ -126,24 +129,24 @@ const resetGame = () => {
 const startGame = () => {
     clearInterval(moveSnake);
     addListenersOnStart();
+    currentScore = 0;
     currentScoreDisplay.innerText = "0";
     renderFood();
     makeInitialSnake();
     direction = "right";
-    const loopMoveSnake = setInterval(moveSnake, 50);
-    return loopMoveSnake;
+    loopMoveSnake()
+    return;
 }
 
 const randomiseFoodGrid = () => {
-    foodRow = Math.round(Math.random()*23);
-    foodCol = Math.round(Math.random()*23);
+    foodRow = Math.round(Math.random()*gridSize);
+    foodCol = Math.round(Math.random()*gridSize);
     foodGrid = `${foodRow} / ${foodCol} / ${foodRow + 1} / ${foodCol + 1}`;
     return foodRow, foodCol, foodGrid;
 }
 
 const renderFood = () => {
     food.style.display = "inline-block";
-    //console.log(gridSizeGetter.style.display);
     //////////////////////////////////////////////////////////////////WRITE CHECK TO SEE IF SNAKE ALREADY THERE
     randomiseFoodGrid();
     while ((food.style.gridArea == foodGrid) || snakeGrid == foodGrid){
@@ -180,12 +183,14 @@ const addListenersOnStart = () => {
 
     directionButtons.forEach((button) => {
         button.addEventListener("click", getDirection);
-        //button.addEventListener("click", loopMoveSnake);
     })
     
     window.addEventListener("keydown", getDirection);
-    //window.addEventListener("keydown", loopMoveSnake);
 };
 
 startButton.addEventListener("click", startGame);
 instructionsButton.addEventListener("click", showInstructions);
+
+window.addEventListener("load", detectGridSize);
+mediaQuery.addEventListener("change", detectGridSize);
+
