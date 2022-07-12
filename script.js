@@ -111,7 +111,6 @@ const loopMoveSnake = () => {
 }
 
 const handleGameOver = () => {
-    //clearInterval(looping);
     direction = "";
     alert(`Game Over!
 
@@ -154,7 +153,7 @@ const renderFood = () => {
     }
 
     food.style.gridArea = foodGrid;
-    return;// foodRow, foodCol;
+    return;
 }
 
 const eatFood = () => {
