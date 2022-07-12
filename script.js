@@ -60,27 +60,19 @@ const makeInitialSnake = () => {
 const getDirection = () => {
     switch(event.key || event.target.parentElement.value){
         case "ArrowRight":
-            if (direction != 1){
-                direction = 1; //next div
-            }
+            if (direction != -1){direction = 1}; //next div
             break;
 
         case "ArrowDown":
-            if (direction != -width){
-                direction = width; //next line
-            }
+            if (direction != -width){direction = width}; //next line
             break;
 
         case "ArrowLeft":
-            if (direction != 1){
-                direction = -1; //previous div
-            }
+            if (direction != 1){direction = -1}; //previous div
             break;
 
         case "ArrowUp":
-            if (direction != 1){
-                direction = -width; //previous line
-            }
+            if (direction != width){direction = -width}; //previous line
             break;
 
         default:
@@ -119,14 +111,14 @@ const moveSnake = () => {
     //Move if none of above are true
     } else{
         //Remove last snake bit
-        let tail = currentSnake.pop();
-        gridSquares[tail].classList.remove("snake");
+        snakeEnd = currentSnake.pop();
+        gridSquares[snakeEnd].classList.remove("snake");
 
         //Add new head
         currentSnake.unshift(currentSnake[0] + direction);
         gridSquares[currentSnake[0]].classList.add("snake");
     }
-    return;
+    return snakeEnd;
 }
 
 const loopMoveSnake = () => {
@@ -196,8 +188,8 @@ const eatFood = () => {
 
 const expandSnake = () => {
     gridSquares[currentSnake[0]+direction].classList.remove("food");
-    gridSquares[tail].classList.add("snake");
-    currentSnake.push(tail);
+    gridSquares[snakeEnd].classList.add("snake");
+    currentSnake.push(snakeEnd);
 }
 
 
