@@ -12,7 +12,7 @@ const mediaQuery = window.matchMedia("(min-width: 768px)");
 
 let currentScore = 0;
 let highScore = 0;
-const initialSnake = [1, 2];
+const initialSnake = [2, 1];
 
 
 
@@ -101,6 +101,7 @@ const moveSnake = () => {
         //Left edge: opposite to right edge
         || ((currentSnake[0]%width == 0) && (direction == -1))
         ){
+
             clearInterval(looping);
             handleGameOver();
             return;
