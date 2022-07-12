@@ -35,7 +35,7 @@ const detectScreenSize = () => {
 }
 
 const createGrid = () => {
-    for (let i=0; i<(mediaQuery.matches ? 15 : 10); i++){ //ternary operator checks what size of grid to make
+    for (let i=0; i<(mediaQuery.matches ? 225 : 100); i++){ //ternary operator checks what size of grid to make
         let div = document.createElement("div");
 
         //Make a big square of divs
@@ -146,6 +146,7 @@ const startGame = () => {
     addListenersOnStart();
     currentScore = 0;
     currentScoreDisplay.innerText = "0";
+    createGrid();
     renderFood();
     makeInitialSnake();
     direction = "right";
