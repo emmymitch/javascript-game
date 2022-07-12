@@ -1,4 +1,4 @@
-// Defining inital constants
+// Defining initial variables
 const instructionsButton = document.querySelector("#instructions");
 const snake = document.querySelector(".snake");
 const food = document.querySelector(".food");
@@ -6,11 +6,6 @@ const startButton = document.querySelector("#start");
 const resetButton = document.querySelector("#reset");
 const currentScoreDisplay = document.querySelector(".score__current");
 const highScoreDisplay = document.querySelector(".score__high");
-// const gameGrid = document.querySelector(".game");
-// const rightButton = document.querySelector("#right");
-// const downButton = document.querySelector("#down");
-// const leftButton = document.querySelector("#left");
-// const upButton = document.querySelector("#up");
 const directionButtons = document.querySelectorAll(".movement-button");
 const mediaQuery = window.matchMedia("(min-width: 768px)");
 
@@ -146,7 +141,7 @@ const randomiseFoodGrid = () => {
 
 const renderFood = () => {
     food.style.display = "inline-block";
-    //////////////////////////////////////////////////////////////////WRITE CHECK TO SEE IF SNAKE ALREADY THERE
+
     randomiseFoodGrid();
     while ((food.style.gridArea == foodGrid) || snakeGrid == foodGrid){
         randomiseFoodGrid();
@@ -169,11 +164,6 @@ const eatFood = () => {
     renderFood();
 }
 
-// const ensureInBox = (coord, min, max) => { //ensures randomly spawned food is is game box
-//     finalmax1 = Math.min(coord, Math.max(min, max)) //finds smallest of coord and whichever is bigger of min or max
-//     finalmax2 = Math.min(min, max) //finds smallest of min and max
-//     return Math.max(finalmax1, finalmax2);
-// }
 
 
 // Event Listeners
