@@ -177,6 +177,9 @@ const renderFood = () => {
 }
 
 const eatFood = () => {
+    currentScore += 1;
+    currentScoreDisplay.innerText = currentScore;
+
     if (currentScore > highScore){
         highScore = currentScore;
         highScoreDisplay.innerText = highScore;
