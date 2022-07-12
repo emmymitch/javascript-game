@@ -6,7 +6,7 @@ const startButton = document.querySelector("#start");
 const resetButton = document.querySelector("#reset");
 const currentScoreDisplay = document.querySelector(".score__current");
 const highScoreDisplay = document.querySelector(".score__high");
-// const gameGrid = document.querySelector(".game");
+const gameGrid = document.querySelector(".game");
 // const rightButton = document.querySelector("#right");
 // const downButton = document.querySelector("#down");
 // const leftButton = document.querySelector("#left");
@@ -25,13 +25,22 @@ let snakeGridArray = [];
 
 
 // Functions
-const detectGridSize = () => {
+const detectScreenSize = () => {
     if (mediaQuery.matches){
-        gridSize = 40;
+        gridSize = 45;
     } else{
         gridSize = 24;
     }
     return gridSize;
+}
+
+const createGrid = () => {
+    for (let i=0; i<(mediaQuery.matches ? 15 : 10); i++){ //ternary operator checks what size of grid to make
+        let div = document.createElement("div");
+
+        //Make a big square of divs
+        gameGrid.appendChild(div);
+    }
 }
 
 const showInstructions = () => {
@@ -199,6 +208,6 @@ const addListenersOnStart = () => {
 startButton.addEventListener("click", startGame);
 instructionsButton.addEventListener("click", showInstructions);
 
-window.addEventListener("load", detectGridSize);
-mediaQuery.addEventListener("change", detectGridSize);
+window.addEventListener("load", detectScreenSize);
+mediaQuery.addEventListener("change", detectScreenSize);
 
