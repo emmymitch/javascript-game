@@ -45,11 +45,11 @@ main {
   justify-content: center;
 }
 main .game {
-  width: 23rem;
-  height: 23rem;
+  width: 24rem;
+  height: 24rem;
   display: grid;
-  grid-template-columns: repeat(23, 1rem);
-  grid-template-rows: repeat(23, 1rem);
+  grid-template-columns: repeat(24, 1rem);
+  grid-template-rows: repeat(24, 1rem);
   gap: 0;
   align-content: center;
   text-align: center;
@@ -83,7 +83,6 @@ main .game .food {
   }
 }
 footer {
-  height: 42.2vh;
   padding-top: 2rem;
   display: flex;
   justify-content: space-around;
