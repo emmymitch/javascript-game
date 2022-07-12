@@ -21,6 +21,7 @@ let snakeCol = 1;
 let foodRow = 20;
 let foodCol = 20;
 let snakeGrid = "";
+let snakeGridArray = [];
 
 
 // Functions
@@ -44,15 +45,18 @@ Your current score is shown alongside the high score. Try your best to beat it!`
 }
 
 const makeInitialSnake = () => {
-    snake.innerHTML = `
-    <div class="snake-div _1"></div>
-    `;
+    snake.innerHTML = `<div class="snake-div snake-bit _1"></div>`;
+    //snake = document.querySelector(".snake-div");
+    snakebit = document.querySelector(".snake-bit");
 
     snakeRow = 2;
     snakeCol = 2;
     snakeGrid = `${snakeRow}/${snakeCol}/${snakeRow+1}/${snakeCol+1}`;
+    
     snake.style.gridArea = snakeGrid;
-    return snakeRow, snakeCol, snakeGrid;
+    snakeGridArray[0] = snakeGrid;
+
+    return  snakebit, snakeRow, snakeCol, snakeGrid;
 } 
 
 const getDirection = () => {
@@ -101,7 +105,9 @@ const moveSnake = () => {
     }
 
     snakeGrid = `${snakeRow}/${snakeCol}/${snakeRow+1}/${snakeCol+1}`;
+    snakeGridArray.push(snakeGrid);
     snake.style.gridArea = snakeGrid;
+    snakebit.style.gridArea = snakeGridArray[snakeGridArray.length - 1];
     return;
 }
 
@@ -127,6 +133,7 @@ const resetGame = () => {
 
 const startGame = () => {
     clearInterval(moveSnake);
+    snakeGridArray = [];
     addListenersOnStart();
     currentScore = 0;
     currentScoreDisplay.innerText = "0";
@@ -166,14 +173,16 @@ const eatFood = () => {
         highScoreDisplay.innerText = highScore;
     }
 
+    expandSnake();
     renderFood();
 }
 
-// const ensureInBox = (coord, min, max) => { //ensures randomly spawned food is is game box
-//     finalmax1 = Math.min(coord, Math.max(min, max)) //finds smallest of coord and whichever is bigger of min or max
-//     finalmax2 = Math.min(min, max) //finds smallest of min and max
-//     return Math.max(finalmax1, finalmax2);
-// }
+const expandSnake = () => {
+    snake.innerHTML += `<div class="snake-div snake-bit"></div>`;
+    snakebit.style.gridArea = snakeGridArray[snakeGridArray.length - 1];
+    return snakebit;
+}
+
 
 
 // Event Listeners
