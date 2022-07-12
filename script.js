@@ -14,12 +14,13 @@ const gameGrid = document.querySelector(".game");
 // const upButton = document.querySelector("#up");
 const directionButtons = document.querySelectorAll(".movement-button");
 
-let speed = 1;
 let currentScore = 0;
 let highScore = 0;
 let snakeRow = 1;
 let snakeCol = 1;
-let direction = "right";
+let foodRow = 20;
+let foodCol = 20;
+let snakeGrid = "";
 
 
 // Functions
@@ -38,13 +39,21 @@ const makeInitialSnake = () => {
     <div class="snake-div _1"></div>
     `;
 
+    snakeRow = 2;
+    snakeCol = 2;
     snakeGrid = `${snakeRow}/${snakeCol}/${snakeRow+1}/${snakeCol+1}`;
     snake.style.gridArea = snakeGrid;
-    return snakeGrid;
+    return snakeRow, snakeCol, snakeGrid;
 } 
 
-const getDirection = (event) => {
-    switch(event.key || event.target.value){
+const getDirection = () => {
+    if (event.type == "click"){
+        directionInput = event.target.parentElement.value;
+    } else if (event.type == "keydown"){
+        directionInput = event.key;
+    }
+
+    switch(directionInput){
         case "ArrowRight":
             direction = "right";
             break;
@@ -65,49 +74,71 @@ const getDirection = (event) => {
 
 const getSnakeGrid = () => {
     if (direction == "right"){
-        snakeRow += 1;
-    } else if (direction == "down"){
         snakeCol += 1;
+    } else if (direction == "down"){
+        snakeRow += 1;
     } else if (direction == "left"){
-        snakeRow -= 1;
-    } else if (direction == "up"){
         snakeCol -= 1;
+    } else if (direction == "up"){
+        snakeRow -= 1;
     }
+    return snakeRow, snakeCol;
+}
+
+const moveSnake = () => {
+    getSnakeGrid();
+
+    if ((snakeCol + 1 >= 25) || (snakeRow + 1 >= 25) || (snakeCol < 0) || (snakeRow < 0)){
+        clearInterval(loopMoveSnake);
+        handleGameOver();
+        return;
+
+    } else if ((snakeCol == foodCol) && snakeRow == foodRow){
+        eatFood();
+    }
+
     snakeGrid = `${snakeRow}/${snakeCol}/${snakeRow+1}/${snakeCol+1}`;
     snake.style.gridArea = snakeGrid;
     return;
 }
 
-const moveSnake = () => {
-    while ((snakeCol < 25) || (snakeRow < 25) || (snakeCol >= 0) || (snakeRow >= 0)){
-        setInterval(getSnakeGrid, 1000);
-
-        if ((snakeCol == foodCol) && snakeRow == foodRow){
-            eatFood();
-        }
-    }
-    handleGameOver()
-}
+// const loopMoveSnake = () => {
+//     setInterval(moveSnake, 50);
+// }
 
 const handleGameOver = () => {
+    clearInterval(loopMoveSnake);
+    direction = "";
     alert(`Game Over!
 
-You scored ${currentScore}`);
+You scored ${currentScore}. Well Done!`);
 }
 
 const resetGame = () => {
+    clearInterval(loopMoveSnake);
     currentScoreDisplay.innerText = "0";
-    highScoreDisplay.innerText = "0";
+    //highScoreDisplay.innerText = "0";
     food.style.display = "none";
-    snake.style.gridArea = "1/1/2/2";
+    direction = "";
     makeInitialSnake();
 }
 
 const startGame = () => {
+    clearInterval(moveSnake);
+    addListenersOnStart();
+    currentScoreDisplay.innerText = "0";
+    renderFood();
     makeInitialSnake();
     direction = "right";
-    //moveSnake();
-    renderFood();
+    const loopMoveSnake = setInterval(moveSnake, 50);
+    return loopMoveSnake;
+}
+
+const randomiseFoodGrid = () => {
+    foodRow = Math.round(Math.random()*23);
+    foodCol = Math.round(Math.random()*23);
+    foodGrid = `${foodRow} / ${foodCol} / ${foodRow + 1} / ${foodCol + 1}`;
+    return foodRow, foodCol, foodGrid;
 }
 
 const renderFood = () => {
@@ -115,18 +146,12 @@ const renderFood = () => {
     //console.log(gridSizeGetter.style.display);
     //////////////////////////////////////////////////////////////////WRITE CHECK TO SEE IF SNAKE ALREADY THERE
     randomiseFoodGrid();
-    while ((food.style.gridArea == newFoodGrid) || snakeGrid == newFoodGrid){
+    while ((food.style.gridArea == foodGrid) || snakeGrid == foodGrid){
         randomiseFoodGrid();
     }
 
-    food.style.gridArea = newFoodGrid;
-}
-
-const randomiseFoodGrid = () => {
-    foodRow = Math.round(Math.random()*23);
-    foodCol = Math.round(Math.random()*23);
-    newFoodGrid = `${foodRow} / ${foodCol} / ${foodRow + 1} / ${foodCol + 1}`;
-    return newFoodGrid;
+    food.style.gridArea = foodGrid;
+    return;// foodRow, foodCol;
 }
 
 const eatFood = () => {
@@ -142,21 +167,25 @@ const eatFood = () => {
     renderFood();
 }
 
-const ensureInBox = (coord, min, max) => { //ensures randomly spawned food is is game box
-    finalmax1 = Math.min(coord, Math.max(min, max)) //finds smallest of coord and whichever is bigger of min or max
-    finalmax2 = Math.min(min, max) //finds smallest of min and max
-    return Math.max(finalmax1, finalmax2);
-}
+// const ensureInBox = (coord, min, max) => { //ensures randomly spawned food is is game box
+//     finalmax1 = Math.min(coord, Math.max(min, max)) //finds smallest of coord and whichever is bigger of min or max
+//     finalmax2 = Math.min(min, max) //finds smallest of min and max
+//     return Math.max(finalmax1, finalmax2);
+// }
 
 
 // Event Listeners
-resetButton.addEventListener("click", resetGame);
+const addListenersOnStart = () => {
+    resetButton.addEventListener("click", resetGame);
+
+    directionButtons.forEach((button) => {
+        button.addEventListener("click", getDirection);
+        //button.addEventListener("click", loopMoveSnake);
+    })
+    
+    window.addEventListener("keydown", getDirection);
+    //window.addEventListener("keydown", loopMoveSnake);
+};
+
 startButton.addEventListener("click", startGame);
 instructionsButton.addEventListener("click", showInstructions);
-
-directionButtons.forEach((button) => {
-    button.addEventListener("click", getDirection);
-})
-
-window.addEventListener("keydown", getDirection);
-window.addEventListener("keydown", moveSnake);
