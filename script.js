@@ -7,22 +7,13 @@ const resetButton = document.querySelector("#reset");
 const currentScoreDisplay = document.querySelector(".score__current");
 const highScoreDisplay = document.querySelector(".score__high");
 const gameGrid = document.querySelector(".game");
-// const rightButton = document.querySelector("#right");
-// const downButton = document.querySelector("#down");
-// const leftButton = document.querySelector("#left");
-// const upButton = document.querySelector("#up");
 const directionButtons = document.querySelectorAll(".movement-button");
 const mediaQuery = window.matchMedia("(min-width: 768px)");
 
 let currentScore = 0;
 let highScore = 0;
-let snakeRow = 1;
-let snakeCol = 1;
-let foodRow = 20;
-let foodCol = 20;
-let snakeGrid = "";
-let snakeGridArray = [];
 const initialSnake = [1, 2];
+
 
 
 // Functions
@@ -89,7 +80,7 @@ const getDirection = () => {
 const moveSnake = (gridSquares) => {
     console.log(currentSnake)
     //Check not hitting wall
-    //Bottom edge: snake head+width >= max grid div && going down
+        //Bottom edge: snake head+width >= max grid div && going down
     if (((currentSnake[0] + width >= width**2) && (direction == width))
         //Top edge: opposite to bottom edge
         || ((currentSnake[0] - width <= 0) && (direction == -width))
@@ -143,7 +134,6 @@ const resetGame = () => {
     currentScoreDisplay.innerText = "0";
     direction = "";
     gameGrid.innerHTML = "";
-    //makeInitialSnake();
 }
 
 const startGame = () => {
