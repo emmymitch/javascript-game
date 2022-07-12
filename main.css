@@ -37,7 +37,7 @@ header .score {
 
 @media screen and (min-width: 1280px) {
   header {
-    height: 10vh;
+    height: 8vh;
   }
 }
 main {
@@ -47,39 +47,36 @@ main {
 main .game {
   width: 24rem;
   height: 24rem;
-  display: grid;
-  grid-template-columns: repeat(24, 1rem);
-  grid-template-rows: repeat(24, 1rem);
-  gap: 0;
+  display: flex;
+  flex-wrap: wrap;
   align-content: center;
   text-align: center;
   background-color: cornsilk;
 }
-main .game .snake-div {
-  height: 1rem;
-  width: 1rem;
-  display: inline-block;
+main .game div {
+  width: 2.4rem;
+  height: 2.4rem;
+}
+main .game .snake {
   background-color: darkmagenta;
   border: 0.15rem solid indigo;
 }
-main .game .snake-div--head {
+main .game .snake--head {
   background-color: indigo;
 }
 main .game .food {
-  height: 1rem;
-  width: 1rem;
-  display: none;
-  grid-area: 0/0/1/1;
   background-color: darkred;
   border-radius: 50%;
 }
 
 @media screen and (min-width: 768px) {
   main .game {
-    width: 40rem;
-    height: 40rem;
-    grid-template-columns: repeat(40, 1rem);
-    grid-template-rows: repeat(40, 1rem);
+    width: 45rem;
+    height: 45rem;
+  }
+  main .game div {
+    width: 3rem;
+    height: 3rem;
   }
 }
 footer {
