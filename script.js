@@ -86,19 +86,6 @@ const getDirection = () => {
     return direction;
 }
 
-// const getSnakeGrid = () => {
-//     if (direction == "right"){
-//         snakeCol += 1;
-//     } else if (direction == "down"){
-//         snakeRow += 1;
-//     } else if (direction == "left"){
-//         snakeCol -= 1;
-//     } else if (direction == "up"){
-//         snakeRow -= 1;
-//     }
-//     return snakeRow, snakeCol;
-// }
-
 const moveSnake = (gridSquares) => {
     console.log(currentSnake)
     //Check not hitting wall
