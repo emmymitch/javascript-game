@@ -13,7 +13,7 @@ main{
 
         background-color: $colour-game;
 
-        div{
+        .gameDiv{
             width: 1.2rem;
             height: 1.2rem;
         }
@@ -37,10 +37,12 @@ main{
 @media screen and (min-width: 768px){
     main{
         .game{
+            margin-top: 2rem;
+            
             width: 45rem;
             height: 45rem;
 
-            div{
+            .gameDiv{
                 width: 1.8rem;
                 height: 1.8rem;
             }

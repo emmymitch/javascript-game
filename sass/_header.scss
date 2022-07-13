@@ -34,6 +34,11 @@ header{
 
 @media screen and (min-width: 1280px){
     header{
-        height: 8vh;
+        height: 35vh;
+        margin-top: 2rem;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: center;
     }
 }

@@ -2,6 +2,11 @@ body {
   background-color: dodgerblue;
 }
 
+@media screen and (min-width: 768px) {
+  body {
+    display: flex;
+  }
+}
 * {
   margin: 0;
   padding: 0;
@@ -37,7 +42,12 @@ header .score {
 
 @media screen and (min-width: 1280px) {
   header {
-    height: 8vh;
+    height: 35vh;
+    margin-top: 2rem;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
   }
 }
 main {
@@ -53,7 +63,7 @@ main .game {
   text-align: center;
   background-color: cornsilk;
 }
-main .game div {
+main .game .gameDiv {
   width: 1.2rem;
   height: 1.2rem;
 }
@@ -71,10 +81,11 @@ main .game .food {
 
 @media screen and (min-width: 768px) {
   main .game {
+    margin-top: 2rem;
     width: 45rem;
     height: 45rem;
   }
-  main .game div {
+  main .game .gameDiv {
     width: 1.8rem;
     height: 1.8rem;
   }
