@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap");
 body {
-  background-color: dodgerblue;
+  background-color: darkgreen;
 }
 
 @media screen and (min-width: 768px) {
@@ -29,19 +29,20 @@ header * {
 header .button {
   height: 2rem;
   width: 5.5rem;
-  border: 0.125rem solid rgb(0, 0, 86);
+  border: 0.125rem solid rgb(11, 62, 11);
   border-radius: 0.5rem;
-  background-color: darkblue;
-  color: white;
+  background-color: lightgreen;
+  color: black;
   font-size: 0.9rem;
   font-weight: 400;
 }
 header .button:active {
-  background-color: rgb(0, 0, 86);
+  background-color: rgb(11, 62, 11);
+  color: white;
 }
 header .score {
   text-align: center;
-  text-shadow: 0.09rem 0.09rem 0.05rem darkblue;
+  text-shadow: 0.09rem 0.09rem 0.05rem rgb(11, 62, 11);
   font-weight: 500;
   font-size: 1rem;
   color: white;
@@ -56,6 +57,9 @@ header .score {
     justify-content: space-between;
     align-items: center;
   }
+  header .button {
+    width: 6rem;
+  }
 }
 main {
   display: flex;
@@ -68,7 +72,7 @@ main .game {
   flex-wrap: wrap;
   align-content: center;
   text-align: center;
-  background-color: cornsilk;
+  background-color: rgb(178, 213, 148);
 }
 main .game .gameDiv {
   width: 1.2rem;
@@ -82,13 +86,13 @@ main .game .snake--head {
   background-color: black;
 }
 main .game .food {
-  background-color: darkred;
+  background-color: rgb(194, 14, 14);
   border-radius: 50%;
 }
 
 @media screen and (min-width: 768px) {
   main .game {
-    margin-top: 2rem;
+    margin-top: 0.5rem;
     width: 45rem;
     height: 45rem;
   }

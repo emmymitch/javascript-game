@@ -18,19 +18,20 @@ header{
         border-radius: 0.5rem;
 
         background-color: $colour-button;
-        color: $colour-text;
+        color: $colour-button-text;
 
         font-size: 0.9rem;
         font-weight: 400;
 
         &:active{
             background-color: $colour-button-border;
+            color: $colour-text;
         }
     }
 
     .score{
         text-align: center;
-        text-shadow: 0.09rem 0.09rem 0.05rem $colour-button;
+        text-shadow: 0.09rem 0.09rem 0.05rem $colour-button-border;
 
         font-weight: 500;
         font-size: 1rem;
@@ -44,9 +45,14 @@ header{
     header{
         height: 35vh;
         margin-top: 2rem;
+
         flex-direction: column;
         flex-wrap: nowrap;
         justify-content: space-between;
         align-items: center;
+
+        .button{
+            width: 6rem;
+        }
     }
 }
