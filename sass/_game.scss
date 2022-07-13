@@ -20,7 +20,7 @@ main{
 
         .snake{
             background-color: $colour-snake-inner;
-            border: 0.15rem solid $colour-snake-border;
+            background: radial-gradient(ellipse at center, $colour-snake-inner 35%, $colour-snake-border);
 
             &--head{
                 background-color: $colour-snake-border;
