@@ -7,6 +7,7 @@ header{
 
     *{
         margin: 0 1rem;
+        font-family: $font-primary;
     }
 
     .button{
@@ -19,6 +20,9 @@ header{
         background-color: $colour-button;
         color: $colour-text;
 
+        font-size: 0.9rem;
+        font-weight: 400;
+
         &:active{
             background-color: $colour-button-border;
         }
@@ -26,15 +30,23 @@ header{
 
     .score{
         text-align: center;
+        text-shadow: 0.09rem 0.09rem 0.05rem $colour-button;
+
+        font-weight: 500;
+        font-size: 1rem;
         color: $colour-text;
-        text-shadow: 0.05rem 0.05rem 0.05rem $colour-button;
+
     }
 }
 
 
 @media screen and (min-width: 1280px){
     header{
-        //justify-content: flex-start;
-        height: 10vh;
+        height: 35vh;
+        margin-top: 2rem;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: center;
     }
 }

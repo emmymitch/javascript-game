@@ -4,6 +4,12 @@ body{
     background-color: $colour-background;
 }
 
+@media screen and (min-width: 768px) {
+    body{
+        display: flex;
+    }
+}
+
 @import "./sass/reset";
 @import "./sass/header";
 @import "./sass/game";

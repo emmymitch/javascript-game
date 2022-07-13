@@ -1,31 +1,38 @@
 // Defining initial variables
 const instructionsButton = document.querySelector("#instructions");
-const snake = document.querySelector(".snake");
-const food = document.querySelector(".food");
 const startButton = document.querySelector("#start");
 const resetButton = document.querySelector("#reset");
 const currentScoreDisplay = document.querySelector(".score__current");
 const highScoreDisplay = document.querySelector(".score__high");
+const gameGrid = document.querySelector(".game");
 const directionButtons = document.querySelectorAll(".movement-button");
 const mediaQuery = window.matchMedia("(min-width: 768px)");
 
 let currentScore = 0;
 let highScore = 0;
-let snakeRow = 1;
-let snakeCol = 1;
-let foodRow = 20;
-let foodCol = 20;
-let snakeGrid = "";
+
 
 
 // Functions
-const detectGridSize = () => {
+const detectScreenSize = () => {
     if (mediaQuery.matches){
-        gridSize = 40;
+        gridSize = 45;
     } else{
         gridSize = 24;
     }
     return gridSize;
+}
+
+const createGrid = () => {
+    for (let i=0; i<(mediaQuery.matches ? 625 : 400); i++){ //ternary operator checks what size of grid to make
+        let square = document.createElement("div");
+        square.classList.add("gameDiv");
+
+        //Make a big square of square divs
+        gameGrid.appendChild(square);
+    }
+    if (mediaQuery.matches ? width=25 : width=20);
+    return width;
 }
 
 const showInstructions = () => {
@@ -38,71 +45,111 @@ Click the start button to begin, or the reset button to reset the game.
 Your current score is shown alongside the high score. Try your best to beat it!`);
 }
 
-const makeInitialSnake = () => {
-    snake.innerHTML = `
-    <div class="snake-div _1"></div>
-    `;
+const resetGame = () => {
+    clearInterval(looping);
+    currentScoreDisplay.innerText = "0";
+    direction = "";
+    gameGrid.innerHTML = "";
+}
 
-    snakeRow = 2;
-    snakeCol = 2;
-    snakeGrid = `${snakeRow}/${snakeCol}/${snakeRow+1}/${snakeCol+1}`;
-    snake.style.gridArea = snakeGrid;
-    return snakeRow, snakeCol, snakeGrid;
+const startGame = () => {
+    gameGrid.innerHTML = "";
+    currentScore = 0;
+    currentScoreDisplay.innerText = "0";
+
+    addListenersOnStart();
+
+    createGrid();
+    gridSquares = document.querySelectorAll(".gameDiv");
+
+    renderFood();
+    makeInitialSnake();
+
+    direction = 1;
+    loopMoveSnake();
+
+    return;
+}
+
+const makeInitialSnake = () => {
+    currentSnake = [2, 1];
+
+    currentSnake.forEach((snakebit) => {
+        gridSquares[snakebit].classList.add("snake");
+    })
+
+    return  currentSnake;
 } 
 
 const getDirection = () => {
     switch(event.key || event.target.parentElement.value){
         case "ArrowRight":
-            direction = "right";
+            if (direction != -1){direction = 1}; //next div
             break;
+
         case "ArrowDown":
-            direction = "down";
+            if (direction != -width){direction = width}; //next line
             break;
+
         case "ArrowLeft":
-            direction = "left";
+            if (direction != 1){direction = -1}; //previous div
             break;
+
         case "ArrowUp":
-            direction = "up";
+            if (direction != width){direction = -width}; //previous line
             break;
+
         default:
             break;
     }
     return direction;
 }
 
-const getSnakeGrid = () => {
-    if (direction == "right"){
-        snakeCol += 1;
-    } else if (direction == "down"){
-        snakeRow += 1;
-    } else if (direction == "left"){
-        snakeCol -= 1;
-    } else if (direction == "up"){
-        snakeRow -= 1;
-    }
-    return snakeRow, snakeCol;
-}
-
 const moveSnake = () => {
-    getSnakeGrid();
+    //Check not hitting wall
+    //Bottom edge: snake head+width >= max grid div && going down
+    if (((currentSnake[0] + width >= width**2) && (direction == width))
+        
+    //Top edge: opposite to bottom edge
+        || ((currentSnake[0] - width <= 0) && (direction == -width))
+        
+    //Right edge: snake head/width gives remainder width-1 (it's on the last square in a line) && going right
+        || ((currentSnake[0]%width == width-1) && (direction == 1))
+        
+    //Left edge: opposite to right edge
+        || ((currentSnake[0]%width == 0) && (direction == -1))
+        ){
 
-    if ((snakeCol+1 >= gridSize+2) || (snakeRow+1 >= gridSize+2) || (snakeCol < 0) || (snakeRow < 0)){
+            clearInterval(looping);
+            handleGameOver();
+            return;
+
+    //Check not hitting self
+    } else if (gridSquares[currentSnake[0]+direction].classList.contains("snake")){
         clearInterval(looping);
         handleGameOver();
         return;
 
-    } else if ((snakeCol == foodCol) && snakeRow == foodRow){
+    //Check if eating food
+    } else if (gridSquares[currentSnake[0]+direction].classList.contains("food")){
         eatFood();
-    }
 
-    snakeGrid = `${snakeRow}/${snakeCol}/${snakeRow+1}/${snakeCol+1}`;
-    snake.style.gridArea = snakeGrid;
-    return;
+    //Else move snake
+    } else{
+        //Remove last snake bit
+        snakeEnd = currentSnake.pop();
+        gridSquares[snakeEnd].classList.remove("snake");
+
+        //Add new head
+        currentSnake.unshift(currentSnake[0] + direction);
+        gridSquares[currentSnake[0]].classList.add("snake");
+    }
+    return snakeEnd;
 }
 
 const loopMoveSnake = () => {
-     looping =  setInterval(moveSnake, 50);
-     return looping;
+    looping = setInterval(moveSnake, 75);
+    return looping;
 }
 
 const handleGameOver = () => {
@@ -112,47 +159,25 @@ const handleGameOver = () => {
 You scored ${currentScore}. Well Done!`);
 }
 
-const resetGame = () => {
-    clearInterval(looping);
-    currentScoreDisplay.innerText = "0";
-    food.style.display = "none";
-    direction = "";
-    makeInitialSnake();
-}
-
-const startGame = () => {
-    clearInterval(moveSnake);
-    addListenersOnStart();
-    currentScore = 0;
-    currentScoreDisplay.innerText = "0";
-    renderFood();
-    makeInitialSnake();
-    direction = "right";
-    loopMoveSnake()
-    return;
-}
-
-const randomiseFoodGrid = () => {
-    foodRow = Math.round(Math.random()*gridSize);
-    foodCol = Math.round(Math.random()*gridSize);
-    foodGrid = `${foodRow} / ${foodCol} / ${foodRow + 1} / ${foodCol + 1}`;
-    return foodRow, foodCol, foodGrid;
+//Food functions
+const randomiseFood = () => {
+    foodPos = Math.round(Math.random()*(width**2));
+    return foodPos;
 }
 
 const renderFood = () => {
-    food.style.display = "inline-block";
+    randomiseFood();
 
-    randomiseFoodGrid();
-    while ((food.style.gridArea == foodGrid) || snakeGrid == foodGrid){
-        randomiseFoodGrid();
+    //Check if snake already there
+    while (gridSquares[foodPos].classList.contains("snake")){
+        randomiseFood();
     }
 
-    food.style.gridArea = foodGrid;
+    gridSquares[foodPos].classList.add("food")
     return;
 }
 
 const eatFood = () => {
-    food.style.display = "none";
     currentScore += 1;
     currentScoreDisplay.innerText = currentScore;
 
@@ -161,12 +186,21 @@ const eatFood = () => {
         highScoreDisplay.innerText = highScore;
     }
 
+    expandSnake();
     renderFood();
+}
+
+const expandSnake = () => {
+    gridSquares[currentSnake[0]+direction].classList.remove("food");
+    gridSquares[snakeEnd].classList.add("snake");
+    currentSnake.push(snakeEnd);
 }
 
 
 
 // Event Listeners
+
+//Only enable directions & reset on game start
 const addListenersOnStart = () => {
     resetButton.addEventListener("click", resetGame);
 
@@ -180,6 +214,5 @@ const addListenersOnStart = () => {
 startButton.addEventListener("click", startGame);
 instructionsButton.addEventListener("click", showInstructions);
 
-window.addEventListener("load", detectGridSize);
-mediaQuery.addEventListener("change", detectGridSize);
+mediaQuery.addEventListener("change", detectScreenSize);
 
