@@ -10,7 +10,6 @@ const mediaQuery = window.matchMedia("(min-width: 768px)");
 
 let currentScore = 0;
 let highScore = 0;
-const initialSnake = [2, 1];
 
 
 
@@ -46,8 +45,34 @@ Click the start button to begin, or the reset button to reset the game.
 Your current score is shown alongside the high score. Try your best to beat it!`);
 }
 
+const resetGame = () => {
+    clearInterval(looping);
+    currentScoreDisplay.innerText = "0";
+    direction = "";
+    gameGrid.innerHTML = "";
+}
+
+const startGame = () => {
+    gameGrid.innerHTML = "";
+    currentScore = 0;
+    currentScoreDisplay.innerText = "0";
+
+    addListenersOnStart();
+
+    createGrid();
+    gridSquares = document.querySelectorAll(".gameDiv");
+
+    renderFood();
+    makeInitialSnake();
+
+    direction = 1;
+    loopMoveSnake();
+
+    return;
+}
+
 const makeInitialSnake = () => {
-    currentSnake = [...initialSnake];
+    currentSnake = [2, 1];
 
     currentSnake.forEach((snakebit) => {
         gridSquares[snakebit].classList.add("snake");
@@ -82,15 +107,13 @@ const getDirection = () => {
 
 const moveSnake = () => {
     //Check not hitting wall
-
-        //Bottom edge: snake head+width >= max grid div && going down
+    //Bottom edge: snake head+width >= max grid div && going down
     if (((currentSnake[0] + width >= width**2) && (direction == width))
         
     //Top edge: opposite to bottom edge
         || ((currentSnake[0] - width <= 0) && (direction == -width))
         
-    //Right edge: snake head/width gives remainder width-1 (it's on the last
-    //square in a line) && going right
+    //Right edge: snake head/width gives remainder width-1 (it's on the last square in a line) && going right
         || ((currentSnake[0]%width == width-1) && (direction == 1))
         
     //Left edge: opposite to right edge
@@ -136,32 +159,7 @@ const handleGameOver = () => {
 You scored ${currentScore}. Well Done!`);
 }
 
-const resetGame = () => {
-    clearInterval(looping);
-    currentScoreDisplay.innerText = "0";
-    direction = "";
-    gameGrid.innerHTML = "";
-}
-
-const startGame = () => {
-    gameGrid.innerHTML = "";
-    currentScore = 0;
-    currentScoreDisplay.innerText = "0";
-
-    addListenersOnStart();
-
-    createGrid();
-    gridSquares = document.querySelectorAll(".gameDiv");
-
-    renderFood();
-    makeInitialSnake();
-
-    direction = 1;
-    loopMoveSnake();
-
-    return;
-}
-
+//Food functions
 const randomiseFood = () => {
     foodPos = Math.round(Math.random()*(width**2));
     return foodPos;
@@ -216,6 +214,5 @@ const addListenersOnStart = () => {
 startButton.addEventListener("click", startGame);
 instructionsButton.addEventListener("click", showInstructions);
 
-//window.addEventListener("load", detectScreenSize);
 mediaQuery.addEventListener("change", detectScreenSize);
 
