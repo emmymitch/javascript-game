@@ -214,5 +214,6 @@ const addListenersOnStart = () => {
 startButton.addEventListener("click", startGame);
 instructionsButton.addEventListener("click", showInstructions);
 
+window.addEventListener("load", detectScreenSize);
 mediaQuery.addEventListener("change", detectScreenSize);
 
