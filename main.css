@@ -68,6 +68,7 @@ main {
 main .game {
   width: 20rem;
   height: 20rem;
+  margin-bottom: -1rem;
   display: flex;
   flex-wrap: wrap;
   align-content: center;
@@ -104,14 +105,18 @@ main .game .food {
 footer {
   padding-top: 2rem;
   display: flex;
-  justify-content: space-around;
-  align-items: flex-start;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   flex-wrap: wrap;
+}
+footer #left, footer #right {
+  margin: 0.5rem 2.5rem;
 }
 footer .movement-button {
   width: 3rem;
   height: auto;
-  margin-bottom: 0.5rem;
+  margin: 0.5rem;
   border: none;
   border-radius: 20%;
   background-color: transparent;
