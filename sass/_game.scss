@@ -3,8 +3,8 @@ main{
     justify-content: center;
 
     .game{
-        width: 24rem;
-        height: 24rem;
+        width: 20rem;
+        height: 20rem;
 
         display: flex;
         flex-wrap: wrap;
@@ -14,8 +14,8 @@ main{
         background-color: $colour-game;
 
         .gameDiv{
-            width: 1.2rem;
-            height: 1.2rem;
+            width: 1rem;
+            height: 1rem;
         }
 
         .snake{

@@ -15,11 +15,7 @@ let highScore = 0;
 
 // Functions
 const detectScreenSize = () => {
-    if (mediaQuery.matches){
-        gridSize = 45;
-    } else{
-        gridSize = 24;
-    }
+    if (mediaQuery.matches ? gridSize=45 : gridSize=20)
     return gridSize;
 }
 

@@ -66,8 +66,8 @@ main {
   justify-content: center;
 }
 main .game {
-  width: 24rem;
-  height: 24rem;
+  width: 20rem;
+  height: 20rem;
   display: flex;
   flex-wrap: wrap;
   align-content: center;
@@ -75,8 +75,8 @@ main .game {
   background-color: rgb(178, 213, 148);
 }
 main .game .gameDiv {
-  width: 1.2rem;
-  height: 1.2rem;
+  width: 1rem;
+  height: 1rem;
 }
 main .game .snake {
   background-color: rgb(255, 208, 0);
