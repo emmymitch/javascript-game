@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap");
 body {
   background-color: dodgerblue;
 }
@@ -22,6 +24,7 @@ header {
 }
 header * {
   margin: 0 1rem;
+  font-family: "Rubik", "PT Sans", Arial, Helvetica, sans-serif;
 }
 header .button {
   height: 2rem;
@@ -30,14 +33,18 @@ header .button {
   border-radius: 0.5rem;
   background-color: darkblue;
   color: white;
+  font-size: 0.9rem;
+  font-weight: 400;
 }
 header .button:active {
   background-color: rgb(0, 0, 86);
 }
 header .score {
   text-align: center;
+  text-shadow: 0.09rem 0.09rem 0.05rem darkblue;
+  font-weight: 500;
+  font-size: 1rem;
   color: white;
-  text-shadow: 0.05rem 0.05rem 0.05rem darkblue;
 }
 
 @media screen and (min-width: 1280px) {
@@ -68,11 +75,11 @@ main .game .gameDiv {
   height: 1.2rem;
 }
 main .game .snake {
-  background-color: darkmagenta;
-  border: 0.15rem solid indigo;
+  background-color: rgb(255, 208, 0);
+  background: radial-gradient(ellipse at center, rgb(255, 208, 0) 35%, black);
 }
 main .game .snake--head {
-  background-color: indigo;
+  background-color: black;
 }
 main .game .food {
   background-color: darkred;

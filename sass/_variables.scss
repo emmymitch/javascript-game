@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap');
 
 $colour-game: cornsilk;
 $colour-background: dodgerblue;
@@ -5,9 +7,10 @@ $colour-background: dodgerblue;
 $colour-button: darkblue;
 $colour-button-border: rgb(0, 0, 86);
 
-$colour-snake-inner: darkmagenta;
-$colour-snake-border: indigo;
+$colour-snake-inner: rgb(255, 208, 0);
+$colour-snake-border: black;
 
 $colour-food: darkred;
 
+$font-primary: "Rubik", "PT Sans", Arial, Helvetica, sans-serif;
 $colour-text: white;
