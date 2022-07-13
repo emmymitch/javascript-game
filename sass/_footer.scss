@@ -15,8 +15,15 @@ footer{
         border-radius: 20%;
         background-color: transparent;
 
+        img{
+            border: 0.2rem solid $colour-button-border;
+            background-color: $colour-button-border;
+            border-radius: 20%;
+        }
+        
         &:active{
-            background-color: $colour-text;
+            //Big shadow so can see around fingers
+            box-shadow: 0 0 1.5rem 0.5rem $colour-button;
         }
     }
 }
