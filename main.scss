@@ -1,4 +1,4 @@
-@use "./sass/variables" as *;
+@use "./sass/abstracts/variables" as *;
 
 body{
     background-color: $colour-background;
@@ -10,8 +10,8 @@ body{
     }
 }
 
-@import "./sass/reset";
-@import "./sass/header";
-@import "./sass/game";
-@import "./sass/footer";
-@import "./sass/landscape";
+@import "./sass/base/reset";
+@import "./sass/layout/header";
+@import "./sass/layout/game";
+@import "./sass/layout/footer";
+@import "./sass/layout/landscape";

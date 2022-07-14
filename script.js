@@ -104,24 +104,17 @@ const getDirection = () => {
 const moveSnake = () => {
     //Check not hitting wall
     //Bottom edge: snake head+width >= max grid div && going down
-    if (((currentSnake[0] + width >= width**2) && (direction == width))
-        
+    if (((currentSnake[0] + width >= width**2) && (direction == width))        
     //Top edge: opposite to bottom edge
-        || ((currentSnake[0] - width <= 0) && (direction == -width))
-        
+        || ((currentSnake[0] - width <= 0) && (direction == -width))        
     //Right edge: snake head/width gives remainder width-1 (it's on the last square in a line) && going right
-        || ((currentSnake[0]%width == width-1) && (direction == 1))
-        
+        || ((currentSnake[0]%width == width-1) && (direction == 1))  
     //Left edge: opposite to right edge
         || ((currentSnake[0]%width == 0) && (direction == -1))
+    //Check not hitting self
+        || (gridSquares[currentSnake[0]+direction].classList.contains("snake"))
         ){
 
-            clearInterval(looping);
-            handleGameOver();
-            return;
-
-    //Check not hitting self
-    } else if (gridSquares[currentSnake[0]+direction].classList.contains("snake")){
         clearInterval(looping);
         handleGameOver();
         return;
@@ -169,7 +162,7 @@ const renderFood = () => {
         randomiseFood();
     }
 
-    gridSquares[foodPos].classList.add("food")
+    gridSquares[foodPos].classList.add("food");
     return;
 }
 
