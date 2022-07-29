@@ -9,10 +9,12 @@ const directionButtons = document.querySelectorAll(".movement-button");
 const mediaQuery = window.matchMedia("(min-width: 768px)");
 
 let currentScore = 0;
-let highScore = 0;
 let hasReset = true;
 let direction = 1;
 let looping;
+
+storeHighScore = window.localStorage;
+highScoreDisplay.innerText = localStorage.getItem("High Score");
 
 
 // Functions
@@ -111,7 +113,7 @@ const getDirection = () => {
     return direction;
 }
 
-const checkCollision = () => {
+const checkIfCollision = () => {
     //Edge collisions
         //Bottom edge: snake head+width >= max grid div && going down
     if (((currentSnake[0] + width >= width**2) && (direction == width))        
@@ -134,8 +136,7 @@ const checkCollision = () => {
 
 const moveSnake = () => {
     //Check not colliding/failing
-    const hasCollided = checkCollision();
-    if (hasCollided){
+    if (checkIfCollision()){
         clearInterval(looping);
         handleGameOver();
         return;
@@ -191,9 +192,9 @@ const eatFood = () => {
     currentScore += 1;
     currentScoreDisplay.innerText = currentScore;
 
-    if (currentScore > highScore){
-        highScore = currentScore;
-        highScoreDisplay.innerText = highScore;
+    if (currentScore > localStorage.getItem("High Score")){
+        localStorage.setItem("High Score", currentScore);
+        highScoreDisplay.innerText = localStorage.getItem("High Score");
     }
 
     expandSnake();
