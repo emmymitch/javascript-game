@@ -11,6 +11,8 @@ const mediaQuery = window.matchMedia("(min-width: 768px)");
 let currentScore = 0;
 let highScore = 0;
 let hasReset = true;
+let direction = 1;
+let looping;
 
 
 // Functions
@@ -69,6 +71,7 @@ const startGame = () => {
     }
 
     direction = 1;
+    let snakeEnd = currentSnake[currentSnake.length - 1];
     loopMoveSnake();
 
     return;
