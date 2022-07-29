@@ -113,7 +113,7 @@ const getDirection = () => {
     return direction;
 }
 
-const checkIfCollision = () => {
+const snakeCollision = () => {
     //Edge collisions
         //Bottom edge: snake head+width >= max grid div && going down
     if (((currentSnake[0] + width >= width**2) && (direction == width))        
@@ -136,7 +136,7 @@ const checkIfCollision = () => {
 
 const moveSnake = () => {
     //Check not colliding/failing
-    if (checkIfCollision()){
+    if (snakeCollision()){
         clearInterval(looping);
         handleGameOver();
         return;
