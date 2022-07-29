@@ -10,7 +10,7 @@ const mediaQuery = window.matchMedia("(min-width: 768px)");
 
 let currentScore = 0;
 let highScore = 0;
-
+let hasReset = true;
 
 
 // Functions
@@ -46,6 +46,7 @@ const resetGame = () => {
     currentScoreDisplay.innerText = "0";
     direction = "";
     gameGrid.innerHTML = "";
+    hasReset = true;
 }
 
 const startGame = () => {
@@ -60,6 +61,12 @@ const startGame = () => {
 
     renderFood();
     makeInitialSnake();
+    
+    if (hasReset === false){
+        clearInterval(looping);
+    } else{
+        hasReset = false;
+    }
 
     direction = 1;
     loopMoveSnake();
